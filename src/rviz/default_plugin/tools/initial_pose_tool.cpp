@@ -51,7 +51,7 @@ InitialPoseTool::InitialPoseTool()
 void InitialPoseTool::onInitialize()
 {
   PoseTool::onInitialize();
-  setName( "2D Pose Estimate" );
+  setName( "指示机器人位置" );
   updateTopic();
 }
 
