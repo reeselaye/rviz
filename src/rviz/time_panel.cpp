@@ -55,17 +55,17 @@ TimePanel::TimePanel( QWidget* parent )
   ros_time_label_ = makeTimeLabel();
   ros_elapsed_label_ = makeTimeLabel();
 
-  experimental_cb_ = new QCheckBox("Experimental");
+  experimental_cb_ = new QCheckBox("实验功能");
   experimental_cb_->setSizePolicy( QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum) );
 
-  pause_button_ = new QPushButton( "Pause" );
-  pause_button_->setToolTip("Freeze ROS time.");
+  pause_button_ = new QPushButton( "暂停" );
+  pause_button_->setToolTip("冻结 ROS 时间。");
   pause_button_->setCheckable(true);
 
   sync_mode_selector_ = new QComboBox(this);
-  sync_mode_selector_->addItem( "Off" );
-  sync_mode_selector_->addItem( "Exact" );
-  sync_mode_selector_->addItem( "Approximate" );
+  sync_mode_selector_->addItem( "关闭" );
+  sync_mode_selector_->addItem( "精确" );
+  sync_mode_selector_->addItem( "近似" );
   sync_mode_selector_->setSizeAdjustPolicy(QComboBox::AdjustToContents);
   sync_mode_selector_->setToolTip("Allows you to synchronize the ROS time and Tf transforms to a given source.");
 
@@ -77,9 +77,9 @@ TimePanel::TimePanel( QWidget* parent )
   experimental_widget_ = new QWidget(this);
   QHBoxLayout* experimental_layout = new QHBoxLayout(this);
   experimental_layout->addWidget( pause_button_ );
-  experimental_layout->addWidget( new QLabel( "Synchronization:" ));
+  experimental_layout->addWidget( new QLabel( "同步:" ));
   experimental_layout->addWidget( sync_mode_selector_ );
-  experimental_layout->addWidget( new QLabel( "Source:" ));
+  experimental_layout->addWidget( new QLabel( "来源:" ));
   experimental_layout->addWidget( sync_source_selector_ );
   experimental_layout->addSpacing(20);
   experimental_layout->setContentsMargins( 0, 0, 20, 0 );
@@ -99,7 +99,7 @@ TimePanel::TimePanel( QWidget* parent )
   QHBoxLayout* layout = new QHBoxLayout(this);
 
   layout->addWidget(experimental_widget_);
-  layout->addWidget( new QLabel( "ROS Time:" ));
+  layout->addWidget( new QLabel( "ROS 时间:" ));
   layout->addWidget( ros_time_label_ );
   layout->addWidget(old_widget_);
   layout->addStretch(100);

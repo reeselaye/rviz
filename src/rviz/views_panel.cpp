@@ -52,14 +52,14 @@ ViewsPanel::ViewsPanel( QWidget* parent )
   camera_type_selector_ = new QComboBox;
   properties_view_ = new PropertyTreeWidget();
 
-  save_button_ = new QPushButton( "Save" );
-  QPushButton* remove_button = new QPushButton( "Remove" );
-  QPushButton* rename_button = new QPushButton( "Rename" );
-  QPushButton* zero_button = new QPushButton( "Zero" );
+  save_button_ = new QPushButton( "保存" );
+  QPushButton* remove_button = new QPushButton( "移除" );
+  QPushButton* rename_button = new QPushButton( "重命名" );
+  QPushButton* zero_button = new QPushButton( "0" );
   zero_button->setToolTip( "Jump to 0,0,0 with the current view controller. Shortcut: Z" );
 
   QHBoxLayout* top_layout = new QHBoxLayout;
-  top_layout->addWidget( new QLabel( "Type:" ));
+  top_layout->addWidget( new QLabel( "类型:" ));
   top_layout->addWidget( camera_type_selector_ );
   top_layout->addStretch();
   top_layout->addWidget( zero_button );
@@ -177,7 +177,7 @@ void ViewsPanel::renameSelected()
     }
 
     QString old_name = view->getName();
-    QString new_name = QInputDialog::getText( this, "Rename View", "New Name?", QLineEdit::Normal, old_name );
+    QString new_name = QInputDialog::getText( this, "移除视图", "新名字?", QLineEdit::Normal, old_name );
 
     if( new_name.isEmpty() || new_name == old_name )
     {

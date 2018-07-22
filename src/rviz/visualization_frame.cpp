@@ -140,7 +140,7 @@ VisualizationFrame::VisualizationFrame( QWidget* parent )
   splash_path_ = QString::fromStdString( (fs::path(package_path_) / "images/splash.png").BOOST_FILE_STRING() );
 
   QToolButton* reset_button = new QToolButton( );
-  reset_button->setText( "Reset" );
+  reset_button->setText( "重置" );
   reset_button->setContentsMargins(0,0,0,0);
   statusBar()->addPermanentWidget( reset_button, 0 );
   connect( reset_button, SIGNAL( clicked( bool )), this, SLOT( reset() ));
@@ -193,7 +193,7 @@ void VisualizationFrame::updateFps()
     last_fps_calc_time_ = ros::WallTime::now();
     if ( original_status_bar_ == statusBar() )
     {
-      fps_label_->setText( QString::number(int(fps)) + QString(" fps") );
+      fps_label_->setText( QString::number(int(fps)) + QString(" 帧每秒") );
     }
   }
 }
@@ -504,7 +504,7 @@ void VisualizationFrame::initToolbars()
   view_menu_->addAction( toolbar_->toggleViewAction() );
 
   add_tool_action_ = new QAction( "", toolbar_actions_ );
-  add_tool_action_->setToolTip( "Add a new tool" );
+  add_tool_action_->setToolTip( "添加工具按钮" );
   add_tool_action_->setIcon( loadPixmap( "package://rviz/icons/plus.png" ) );
   toolbar_->addAction( add_tool_action_ );
   connect( add_tool_action_, SIGNAL( triggered() ), this, SLOT( openNewToolDialog() ));
@@ -513,7 +513,7 @@ void VisualizationFrame::initToolbars()
   QToolButton* remove_tool_button = new QToolButton();
   remove_tool_button->setMenu( remove_tool_menu_ );
   remove_tool_button->setPopupMode( QToolButton::InstantPopup );
-  remove_tool_button->setToolTip( "Remove a tool from the toolbar" );
+  remove_tool_button->setToolTip( "移除工具按钮" );
   remove_tool_button->setIcon( loadPixmap( "package://rviz/icons/minus.png" ) );
   toolbar_->addWidget( remove_tool_button );
   connect( remove_tool_menu_, SIGNAL( triggered( QAction* )), this, SLOT( onToolbarRemoveTool( QAction* )));
@@ -591,7 +591,7 @@ void VisualizationFrame::openNewPanelDialog()
   QStringList empty;
 
   NewObjectDialog* dialog = new NewObjectDialog( panel_factory_,
-                                                 "Panel",
+                                                 "面板",
                                                  empty,
                                                  empty,
                                                  &class_id,
@@ -616,7 +616,7 @@ void VisualizationFrame::openNewToolDialog()
   ToolManager* tool_man = manager_->getToolManager();
 
   NewObjectDialog* dialog = new NewObjectDialog( tool_man->getFactory(),
-                                                 "Tool",
+                                                 "工具",
                                                  empty,
                                                  tool_man->getToolClasses(),
                                                  &class_id );
@@ -976,9 +976,9 @@ bool VisualizationFrame::prepareToExit()
 void VisualizationFrame::onOpen()
 {
   manager_->stopUpdate();
-  QString filename = QFileDialog::getOpenFileName( this, "Choose a file to open",
+  QString filename = QFileDialog::getOpenFileName( this, "选择文件",
                                                    QString::fromStdString( last_config_dir_ ),
-                                                   "RViz config files (" CONFIG_EXTENSION_WILDCARD ")" );
+                                                   "RViz 配置文件 (" CONFIG_EXTENSION_WILDCARD ")" );
   manager_->startUpdate();
 
   if( !filename.isEmpty() )
@@ -1025,9 +1025,9 @@ void VisualizationFrame::onSave()
 void VisualizationFrame::onSaveAs()
 {
   manager_->stopUpdate();
-  QString q_filename = QFileDialog::getSaveFileName( this, "Choose a file to save to",
+  QString q_filename = QFileDialog::getSaveFileName( this, "选择文件",
                                                      QString::fromStdString( last_config_dir_ ),
-                                                     "RViz config files (" CONFIG_EXTENSION_WILDCARD ")" );
+                                                     "RViz 配置文件 (" CONFIG_EXTENSION_WILDCARD ")" );
   manager_->startUpdate();
 
   if( !q_filename.isEmpty() )
@@ -1200,7 +1200,7 @@ void VisualizationFrame::onHelpAbout()
   .arg(OGRE_VERSION_SUFFIX)
   .arg(OGRE_VERSION_NAME);
 
-  QMessageBox::about(QApplication::activeWindow(), "About", about_text);
+  QMessageBox::about(QApplication::activeWindow(), "关于", about_text);
 }
 
 void VisualizationFrame::onDockPanelChange()
