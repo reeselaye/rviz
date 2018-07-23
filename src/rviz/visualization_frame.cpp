@@ -645,14 +645,14 @@ void VisualizationFrame::loadDisplayConfig( const QString& qpath )
 {
   std::string path = qpath.toStdString();
   std::string actual_load_path = path;
-  if( !fs::exists( path ) || fs::is_directory( path ) || fs::is_empty( path ))
+
+  actual_load_path = (fs::path(package_path_) / "default.rviz").BOOST_FILE_STRING();
+  if( !fs::exists( actual_load_path ))
   {
-    actual_load_path = (fs::path(package_path_) / "default.rviz").BOOST_FILE_STRING();
-    if( !fs::exists( actual_load_path ))
-    {
-      ROS_ERROR( "Default display config '%s' not found.  RViz will be very empty at first.", actual_load_path.c_str() );
-      return;
-    }
+    ROS_ERROR( "Default display config '%s' not found.  RViz will be very empty at first.", actual_load_path.c_str() );
+    return;
+  } else {
+    ROS_INFO( "'%s/default.rviz' is use as layout config.", fs::path(package_path_).c_str() );
   }
 
   // Check if we have unsaved changes to the current config the same
@@ -717,15 +717,9 @@ void VisualizationFrame::setDisplayConfigFile( const std::string& path )
 {
   display_config_file_ = path;
 
-  std::string title;
-  if( path == default_display_config_file_ )
-  {
-    title = "RViz[*]";
-  }
-  else
-  {
-    title = fs::path( path ).BOOST_FILENAME_STRING() + "[*] - RViz";
-  }
+  std::string title;  
+  title = "巡检机器人监控软件";
+
   setWindowTitle( QString::fromStdString( title ));
 }
 
