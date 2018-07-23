@@ -442,14 +442,9 @@ void VisualizationFrame::initMenus()
 {
   file_menu_ = menuBar()->addMenu( "文件" );
 
-  QAction * file_menu_open_action = file_menu_->addAction( "加载配置", this, SLOT( onOpen() ), QKeySequence( "Ctrl+O" ));
-  this->addAction(file_menu_open_action);
-  QAction * file_menu_save_action = file_menu_->addAction( "保存配置", this, SLOT( onSave() ), QKeySequence( "Ctrl+S" ));
-  this->addAction(file_menu_save_action);
   QAction * file_menu_save_as_action = file_menu_->addAction( "配置另存为", this, SLOT( onSaveAs() ), QKeySequence( "Ctrl+Shift+S"));
   this->addAction(file_menu_save_as_action);
 
-  recent_configs_menu_ = file_menu_->addMenu( "最近的配置" );
   file_menu_->addAction( "保存图像", this, SLOT( onSaveImage() ));
   if( show_choose_new_master_option_ )
   {
@@ -462,10 +457,6 @@ void VisualizationFrame::initMenus()
   this->addAction(file_menu_quit_action);
 
   view_menu_ = menuBar()->addMenu( "视图" );
-  view_menu_->addAction( "添加面板", this, SLOT( openNewPanelDialog() ));
-  delete_view_menu_ = view_menu_->addMenu( "删除面板" );
-  delete_view_menu_->setEnabled( false );
-
   QAction * fullscreen_action = view_menu_->addAction("全屏", this, SLOT( setFullScreen(bool) ), Qt::Key_F11);
   fullscreen_action->setCheckable(true);
   this->addAction(fullscreen_action); // Also add to window, or the shortcut doest work when the menu is hidden.
@@ -474,9 +465,6 @@ void VisualizationFrame::initMenus()
   view_menu_->addSeparator();
 
   QMenu* help_menu = menuBar()->addMenu( "帮助" );
-  help_menu->addAction( "显示帮助面板", this, SLOT( showHelpPanel() ));
-  help_menu->addAction( "从浏览器打开 rviz wiki", this, SLOT( onHelpWiki() ));
-  help_menu->addSeparator();
   help_menu->addAction( "关于", this, SLOT( onHelpAbout() ));
 }
 
@@ -494,7 +482,6 @@ void VisualizationFrame::initToolbars()
   toolbar_->setToolButtonStyle( Qt::ToolButtonTextBesideIcon );
   toolbar_actions_ = new QActionGroup( this );
   connect( toolbar_actions_, SIGNAL( triggered( QAction* )), this, SLOT( onToolbarActionTriggered( QAction* )));
-  view_menu_->addAction( toolbar_->toggleViewAction() );
 
   add_tool_action_ = new QAction( "", toolbar_actions_ );
   add_tool_action_->setToolTip( "添加工具按钮" );
@@ -613,8 +600,6 @@ void VisualizationFrame::openNewToolDialog()
 
 void VisualizationFrame::updateRecentConfigMenu()
 {
-  recent_configs_menu_->clear();
-
   D_string::iterator it = recent_configs_.begin();
   D_string::iterator end = recent_configs_.end();
   for (; it != end; ++it)
@@ -634,7 +619,6 @@ void VisualizationFrame::updateRecentConfigMenu()
       QAction* action = new QAction( qdisplay_name, this );
       action->setData( QString::fromStdString( *it ));
       connect( action, SIGNAL( triggered() ), this, SLOT( onRecentConfigSelected() ));
-      recent_configs_menu_->addAction( action );
     }
   }
 }
@@ -1203,12 +1187,7 @@ void VisualizationFrame::onDeletePanel()
         delete custom_panels_[ i ].dock;
         custom_panels_.removeAt( i );
         setDisplayConfigModified();
-        action->deleteLater();
-        if( delete_view_menu_->actions().size() == 1 &&
-            delete_view_menu_->actions().first() == action )
-        {
-          delete_view_menu_->setEnabled( false );
-        }
+        action->deleteLater();        
         return;
       }
     }
@@ -1256,9 +1235,7 @@ QDockWidget* VisualizationFrame::addPanelByName( const QString& name,
   record.dock = addPane( name, panel, area, floating );
   record.panel = panel;
   record.name = name;
-  record.delete_action = delete_view_menu_->addAction( name, this, SLOT( onDeletePanel() ));
   custom_panels_.append( record );
-  delete_view_menu_->setEnabled( true );
 
   record.panel->initialize( manager_ );
 
