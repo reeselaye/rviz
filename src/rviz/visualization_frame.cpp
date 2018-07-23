@@ -200,14 +200,7 @@ void VisualizationFrame::updateFps()
 
 void VisualizationFrame::closeEvent( QCloseEvent* event )
 {
-  if( prepareToExit() )
-  {
-    event->accept();
-  }
-  else
-  {
-    event->ignore();
-  }
+  event->accept();
 }
 
 void VisualizationFrame::leaveEvent ( QEvent * event )

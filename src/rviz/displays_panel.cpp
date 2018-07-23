@@ -55,20 +55,20 @@ DisplaysPanel::DisplaysPanel( QWidget* parent )
   tree_with_help_ = new PropertyTreeWithHelp;
   property_grid_ = tree_with_help_->getTree();
 
-  QPushButton* add_button = new QPushButton( "Add" );
+  QPushButton* add_button = new QPushButton( "添加" );
   add_button->setShortcut( QKeySequence( QString( "Ctrl+N" )));
-  add_button->setToolTip( "Add a new display, Ctrl+N" );
-  duplicate_button_ = new QPushButton( "Duplicate" );
+  add_button->setToolTip( "添加新的图形显示, Ctrl+N" );
+  duplicate_button_ = new QPushButton( "复制" );
   duplicate_button_->setShortcut( QKeySequence( QString( "Ctrl+D" )));
-  duplicate_button_->setToolTip( "Duplicate a display, Ctrl+D" );
+  duplicate_button_->setToolTip( "复制图形显示, Ctrl+D" );
   duplicate_button_->setEnabled( false );
-  remove_button_ = new QPushButton( "Remove" );
+  remove_button_ = new QPushButton( "删除" );
   remove_button_->setShortcut( QKeySequence( QString( "Ctrl+X" )));
-  remove_button_->setToolTip( "Remove displays, Ctrl+X" );
+  remove_button_->setToolTip( "删除图形显示, Ctrl+X" );
   remove_button_->setEnabled( false );
-  rename_button_ = new QPushButton( "Rename" );
+  rename_button_ = new QPushButton( "重命名" );
   rename_button_->setShortcut( QKeySequence( QString( "Ctrl+R" )));
-  rename_button_->setToolTip( "Rename a display, Ctrl+R" );
+  rename_button_->setToolTip( "重命名图形显示, Ctrl+R" );
   rename_button_->setEnabled( false );
 
   QHBoxLayout* button_layout = new QHBoxLayout;
@@ -112,7 +112,7 @@ void DisplaysPanel::onNewDisplay()
 
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   AddDisplayDialog* dialog = new AddDisplayDialog( vis_manager_->getDisplayFactory(),
-                                                   "Display",
+                                                   "添加图形显示",
                                                    empty, empty,
                                                    &lookup_name,
                                                    &display_name,
