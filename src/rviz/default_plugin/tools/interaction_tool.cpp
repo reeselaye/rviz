@@ -64,6 +64,7 @@ void InteractionTool::onInitialize()
 {
   move_tool_.initialize( context_ );
   last_selection_frame_count_ = context_->getFrameCount();
+  setName("选择");
   deactivate();
 }
 

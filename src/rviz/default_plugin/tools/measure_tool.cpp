@@ -65,6 +65,8 @@ void MeasureTool::onInitialize()
 
   std_cursor_ = getDefaultCursor();
   hit_cursor_ = makeIconCursor( "package://rviz/icons/crosshair.svg" );
+
+  setName("测量");
 }
 
 void MeasureTool::activate()

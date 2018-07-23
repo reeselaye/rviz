@@ -368,7 +368,7 @@ void VisualizationFrame::initialize(const QString& display_config_file )
 
   manager_->startUpdate();
   initialized_ = true;
-  Q_EMIT statusUpdate( "RViz is ready." );
+  Q_EMIT statusUpdate( "已就绪。" );
 
   connect( manager_, SIGNAL( preUpdate() ), this, SLOT( updateFps() ) );
   connect( manager_, SIGNAL( statusUpdate( const QString& )), this, SIGNAL( statusUpdate( const QString& )));
@@ -506,18 +506,7 @@ void VisualizationFrame::initToolbars()
   add_tool_action_ = new QAction( "", toolbar_actions_ );
   add_tool_action_->setToolTip( "添加工具按钮" );
   add_tool_action_->setIcon( loadPixmap( "package://rviz/icons/plus.png" ) );
-  toolbar_->addAction( add_tool_action_ );
   connect( add_tool_action_, SIGNAL( triggered() ), this, SLOT( openNewToolDialog() ));
-
-  remove_tool_menu_ = new QMenu();
-  QToolButton* remove_tool_button = new QToolButton();
-  remove_tool_button->setMenu( remove_tool_menu_ );
-  remove_tool_button->setPopupMode( QToolButton::InstantPopup );
-  remove_tool_button->setToolTip( "移除工具按钮" );
-  remove_tool_button->setIcon( loadPixmap( "package://rviz/icons/minus.png" ) );
-  toolbar_->addWidget( remove_tool_button );
-  connect( remove_tool_menu_, SIGNAL( triggered( QAction* )), this, SLOT( onToolbarRemoveTool( QAction* )));
-
 }
 
 void VisualizationFrame::hideDockImpl( Qt::DockWidgetArea area, bool hide )
@@ -1082,13 +1071,11 @@ void VisualizationFrame::addTool( Tool* tool )
 {
   QAction* action = new QAction( tool->getName(), toolbar_actions_ );
   action->setIcon( tool->getIcon() );
-  action->setIconText( tool->getName() );
+  action->setIconText( tool->getName() );  
   action->setCheckable( true );
   toolbar_->insertAction( add_tool_action_, action );
   action_to_tool_map_[ action ] = tool;
   tool_to_action_map_[ tool ] = action;
-
-  remove_tool_menu_->addAction( tool->getName() );
 }
 
 void VisualizationFrame::onToolbarActionTriggered( QAction* action )
@@ -1126,16 +1113,6 @@ void VisualizationFrame::removeTool( Tool* tool )
     action_to_tool_map_.erase( action );
   }
   QString tool_name = tool->getName();
-  QList<QAction*> remove_tool_actions = remove_tool_menu_->actions();
-  for( int i = 0; i < remove_tool_actions.size(); i++ )
-  {
-    QAction* removal_action = remove_tool_actions.at( i );
-    if( removal_action->text() == tool_name )
-    {
-      remove_tool_menu_->removeAction( removal_action );
-      break;
-    }
-  }
 }
 
 void VisualizationFrame::refreshTool( Tool* tool )
