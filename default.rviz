@@ -276,7 +276,7 @@ Visualization Manager:
     - Class: rviz/SetInitialPose
       Topic: /initialpose
     - Class: rviz/SetGoal
-      Topic: /move_base_simple/goal
+      Topic: /multi_goals/add
     - Class: rviz/Measure
     - Class: rviz/PublishPoint
       Single click: true
