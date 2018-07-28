@@ -51,7 +51,7 @@ GoalTool::GoalTool()
 void GoalTool::onInitialize()
 {
   PoseTool::onInitialize();
-  setName( "设定导航目标点" );
+  setName( "添加导航目标点" );
   updateTopic();
 }
 

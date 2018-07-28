@@ -72,7 +72,7 @@ void PointTool::onInitialize()
   hit_cursor_ = cursor_;
   std_cursor_ = getDefaultCursor();
 
-  setName("添加目标点");
+  setName("设定即时目标点");
 }
 
 void PointTool::activate()
