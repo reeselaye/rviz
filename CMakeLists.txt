@@ -8,6 +8,7 @@ if (POLICY CMP0054)
   cmake_policy(SET CMP0054 NEW)
 endif()
 
+find_package(dashgo_msgs REQUIRED)
 find_package(Boost REQUIRED
   COMPONENTS
   filesystem
@@ -208,6 +209,10 @@ catkin_package(
     visualization_msgs
 )
 
+include_directories(
+  ${dashgo_msgs_INCLUDE_DIRS}
+  )
+
 include_directories(SYSTEM
   ${EIGEN3_INCLUDE_DIRS}
   ${OGRE_OV_INCLUDE_DIRS}
@@ -217,6 +222,10 @@ include_directories(SYSTEM
   ${urdfdom_headers_INCLUDE_DIRS}
 )
 include_directories(src ${catkin_INCLUDE_DIRS})
+
+link_directories(
+  ${dashgo_msgs_LIBRARY_DIRS}
+)
 
 #### If gtk ends up being the best way to get the correct window
 #### position under X11, this is how to compile it in.
