@@ -14,7 +14,7 @@ Panels:
     SyncSource: 激光雷达
   - Class: rviz_plugin_dashgo/手动控制
     Name: 手动控制
-    Topic: /move_base/manual_op
+    Topic: /cmd_vel
   - Class: rviz_plugin_dashgo/状态信息
     Name: 状态信息
 Visualization Manager:
